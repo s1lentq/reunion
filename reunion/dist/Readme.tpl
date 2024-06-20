@@ -59,7 +59,6 @@ HOW TO CHANGE REJECT MESSAGES WHEN CLIENTID IS 5 (DEPRECATED)
 		dp_rejmsg_revemu_sc2009 for revEmu (> 9.82) and SteamClient2009 clients
 		dp_rejmsg_sxei for clients with sXe Injected if EnableSXEIdGeneration is set to 1
 		dp_rejmsg_revemu2013 for revEmu 2013 clients
-		dp_rejmsg_sse3 for SmartSteamEmu3 clients
 
 	Just put message to them and it will be displayed for rejected clients.
 
