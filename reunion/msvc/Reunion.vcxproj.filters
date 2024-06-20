@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{cc8861f7-9ca7-4d89-b581-eb4c90656d85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="public">
+      <UniqueIdentifier>{e703ce3f-72eb-415a-9789-dbd63e4d2ab9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="misc">
+      <UniqueIdentifier>{cf6094ab-1021-440b-998f-361a3bb584a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="version">
+      <UniqueIdentifier>{9f4edac4-aa51-4e20-af48-4e2ddd9a8cf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extra">
+      <UniqueIdentifier>{a1c4d62e-4bdb-4719-8fa8-6a2aa7e47e2a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\dllapi.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\engine_api.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\h_export.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\meta_api.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\precompiled.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sdk_util.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Rijndael.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sha2.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\client_auth.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\reunion_player.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\reunion_rehlds_api.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\reunion_cfg.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\reunion_authorizers.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dep\rehlsdk\engine\sys_shared.cpp">
+      <Filter>public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dep\rehlsdk\public\interface.cpp">
+      <Filter>public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\public_amalgamation.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\RijndaelChanged.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\murmur3.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\server_info.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Sizebuf.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\version\version.cpp">
+      <Filter>version</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\reunion_utils.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\reunion_api.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\query_limiter.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\query_bugfix.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\query_banlist.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\precompiled.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Rijndael.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sha2.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\reunion_shared.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\reunion_player.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\reunion_rehlds_api.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\reunion_cfg.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\client_auth.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\reunion_authorizers.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\osconf.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\RijndaelChanged.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\murmur3.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\server_info.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Sizebuf.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="..\version\appversion.h">
+      <Filter>version</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\reunion_api.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\reunion_utils.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\protocol.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\query_limiter.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\query_bugfix.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\query_banlist.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\dist\reunion.cfg">
+      <Filter>misc</Filter>
+    </None>
+    <None Include="reunion.def" />
+    <None Include="PublishPath.ini" />
+    <None Include="..\extra\reu_test.sma">
+      <Filter>extra</Filter>
+    </None>
+    <None Include="..\extra\updatehint.sma">
+      <Filter>extra</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Reunion.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\extra\updatehint.txt">
+      <Filter>extra</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

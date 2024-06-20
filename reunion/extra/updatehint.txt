@@ -1,0 +1,7 @@
+[en]
+HUDHINT = Your client is outdated. Check chat and console for download URL.
+CHATHINT = Download new client @ %s
+
+[ru]
+HUDHINT = TBOU KJIUEHT YCTAPEJI. CMOTPU CCbIJIKY B 4ATE U B KOHCOJIU.
+CHATHINT = Cka4au HoBbIU kJIUEHT TYT: %s
