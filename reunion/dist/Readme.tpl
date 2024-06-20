@@ -1,7 +1,7 @@
 Reunion is a plugin for metamod that allows p.47 and 48 no-steam clients to join the rehlds-based server.
 
 CURRENT VERSION: ${APP_VERSION_STRD}
-For more information and updates please check http://cs.rin.ru/forum/viewtopic.php?f=29&t=69235
+For more information and updates please check https://github.com/s1lentq/reunion
 
 ARCHIVE CONTAINS:
 	amxx directory	- some samples of AmxModX plugins that uses reunion functionality.
