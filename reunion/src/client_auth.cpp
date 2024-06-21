@@ -97,6 +97,7 @@ uint64_t SteamByIp(uint32_t ip)
 bool Reunion_FinishClientAuth(CReunionPlayer* reunionPlr, USERID_t* userid, client_auth_context_t* ctx)
 {
 	client_auth_kind authkind;
+	client_id_kind idkind = CI_UNKNOWN;
 
 	if (!ctx->authentificatedInSteam) {
 		// native auth failed, try authorize by emulators
@@ -125,6 +126,10 @@ bool Reunion_FinishClientAuth(CReunionPlayer* reunionPlr, USERID_t* userid, clie
 				authkind = CA_STEAM_PENDING;
 			}
 			else {
+				// check for bad authkey
+				if (!IsValidHddsnNumber(authdata.authKey, authdata.authKeyLen))
+					idkind = CI_VALVE_BY_IP;
+
 				// salt steamid
 				if (g_ReunionConfig->getSteamIdSaltLen()) {
 					SaltSteamId(&authdata);
@@ -162,7 +167,9 @@ bool Reunion_FinishClientAuth(CReunionPlayer* reunionPlr, USERID_t* userid, clie
 	}
 
 	// add prefix
-	client_id_kind idkind = g_ReunionConfig->getIdGenOptions(authkind)->id_kind;
+	if (idkind == CI_UNKNOWN)
+		idkind = g_ReunionConfig->getIdGenOptions(authkind)->id_kind;
+
 	switch (idkind) {
 	// check for deprecation
 	case CI_DEPRECATED:

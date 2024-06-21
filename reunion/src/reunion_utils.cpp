@@ -145,6 +145,19 @@ bool IsHddsnNumber(const char* authstring)
 	return strtoull(authstring, nullptr, 10) >= UINT32_MAX; // SSD
 }
 
+// This serial number is actually not a valid serial number
+// it is a system bug that provides an incorrect serial number for NVMe solid-state drives (Netac NVMe SSD),
+// retrieved from the Storage Descriptor instead of reading it from the driver.
+// Therefore, obtaining the serial number from the Storage Descriptor means we should not generate a SteamID based on such serial numbers,
+// as it increases the risk of SteamID collisions.
+// Instead, it is better to generate a SteamID based on the client's IP.
+const char *BadHddsnNumber = "0000_0000_0000_0000_0000_0100_0";
+
+bool IsValidHddsnNumber(const void* data, size_t maxlen)
+{
+	return memcmp(data, BadHddsnNumber, min(strlen(BadHddsnNumber), maxlen)) != 0;
+}
+
 void util_console_print(const char* fmt, ...)
 {
 	char buf[1024];

@@ -58,14 +58,16 @@ void RevEmuFinishAuthorization(authdata_t* authdata, const char* authStr, bool s
 	if (IsHddsnNumber(authStr)) {
 		authdata->authKeyKind = AK_HDDSN;
 
-		LCPrintf(false, "RevEmu raw auth string: '%s' (HDDSN)\n", authStr);
-
 		if (stripSpecialChars) {
 			authdata->authKeyLen = strecpy(hddsn, authStr, authKeyMaxLen, " \\/-");
 			authStr = hddsn;
 		}
 		else
 			authdata->authKeyLen = min(strlen(authStr), authKeyMaxLen);
+
+		LCPrintf(false, "RevEmu raw auth string: '%s' (HDDSN)%s\n", authStr,
+			IsValidHddsnNumber(authStr, authdata->authKeyLen) ? "" : " (INVALID)"
+		);
 	}
 	else {
 		authdata->authKeyKind = AK_VOLUMEID;

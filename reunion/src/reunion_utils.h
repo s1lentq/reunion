@@ -16,6 +16,7 @@ extern bool IsUniqueIdKind(client_id_kind idkind);
 extern bool IsValidId(uint32 authId);
 extern bool IsValidSteamTicket(const uint8 *pvSteam2Key, size_t ucbSteam2Key);
 extern bool IsHddsnNumber(const char* authstring);
+extern bool IsValidHddsnNumber(const void* data, size_t maxlen);
 
 extern void util_console_print(const char* fmt, ...);
 extern void util_syserror(const char* fmt, ...);
