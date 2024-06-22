@@ -49,21 +49,30 @@ void CReunionPlayer::authenticated(int proto, client_id_kind idkind, client_auth
 	const client_id_gen_opts_t* idGenOpts = g_ReunionConfig->getIdGenOptions(m_AuthKind);
 	const client_id_gen_opts_t* idByIpGenOpts = g_ReunionConfig->getIdByIpGenOpts();
 
+	// use auth key type prefixes
+	bool akPrefixes = g_ReunionConfig->getAuthVersion() == av_reunion2018;
+
 	switch (m_IdKind) {
 	case CI_REAL_STEAM:
-		sprintf(m_idString, "STEAM_%u:%u:%u", idGenOpts->prefix1, accId & 1, accId >> 1);
+		sprintf(m_idString, "STEAM_%u:%u:%u", akPrefixes ? m_authKeyKind : idGenOpts->prefix1, accId & 1, accId >> 1);
 		break;
 
 	case CI_REAL_VALVE:
-		sprintf(m_idString, "VALVE_%u:%u:%u", idGenOpts->prefix1, accId & 1, accId >> 1);
+		sprintf(m_idString, "VALVE_%u:%u:%u", akPrefixes ? m_authKeyKind : idGenOpts->prefix1, accId & 1, accId >> 1);
 		break;
 
 	case CI_STEAM_BY_IP:
-		sprintf(m_idString, "STEAM_%u:%u:%u", idByIpGenOpts->prefix1, idByIpGenOpts->prefix2, accId >> 1);
+		if (akPrefixes)
+			sprintf(m_idString, "STEAM_%u:%u:%u", AK_MAX, accId & 1, accId >> 1);
+		else
+			sprintf(m_idString, "STEAM_%u:%u:%u", idByIpGenOpts->prefix1, idByIpGenOpts->prefix2, accId >> 1);
 		break;
 
 	case CI_VALVE_BY_IP:
-		sprintf(m_idString, "VALVE_%u:%u:%u", idByIpGenOpts->prefix1, idByIpGenOpts->prefix2, accId >> 1);
+		if (akPrefixes)
+			sprintf(m_idString, "VALVE_%u:%u:%u", AK_MAX, accId & 1, accId >> 1);
+		else
+			sprintf(m_idString, "VALVE_%u:%u:%u", idByIpGenOpts->prefix1, idByIpGenOpts->prefix2, accId >> 1);
 		break;
 
 	case CI_HLTV:
