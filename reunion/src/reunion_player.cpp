@@ -11,6 +11,8 @@ CReunionPlayer::CReunionPlayer(IGameClient* cl) {
 void CReunionPlayer::clear() {
 	m_IdKind = CI_UNKNOWN;
 	m_AuthKind = CA_UNKNOWN;
+	m_authKeyKind = AK_OTHER;
+	m_idString[0] = 0;
 	m_Protocol = 0;
 	m_ConnectionTime = 0.0;
 	m_UnauthenticatedSteamId = 0;

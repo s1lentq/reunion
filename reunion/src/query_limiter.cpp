@@ -8,6 +8,7 @@ CQueryLimiter::CQueryLimiter()
 	m_uniqueQueries = 0;
 	m_useGlobalRateLimit = false;
 	m_lastAdded = -1;
+	m_lastFloodLog = 0;
 	memset(m_lastQueries, 0, sizeof m_lastQueries);
 
 	if ((MAX_STORED_QUERIES & (MAX_STORED_QUERIES - 1)) != 0)
