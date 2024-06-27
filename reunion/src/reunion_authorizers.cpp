@@ -48,13 +48,11 @@ static uint32_t revHash(const char* str)
 	return hash;
 }
 
-void RevEmuFinishAuthorization(authdata_t* authdata, const char* authStr, bool stripSpecialChars)
+void RevEmuFinishAuthorization(authdata_t* authdata, const char* authStr, size_t authKeyMaxLen, bool stripSpecialChars)
 {
-	size_t authKeyMaxLen = g_ReunionConfig->getAuthVersion() >= av_reunion2018 ? MAX_AUTHKEY_LEN : MAX_AUTHKEY_LEN_OLD;
 	uint32_t volumeId;
 	char hddsn[256];
 
-	bool authVolumeId = false;
 	if (IsHddsnNumber(authStr)) {
 		authdata->authKeyKind = AK_HDDSN;
 
@@ -77,7 +75,6 @@ void RevEmuFinishAuthorization(authdata_t* authdata, const char* authStr, bool s
 			volumeId = strtoul(authStr, nullptr, 10) & 0x7FFFFFFF;
 			authdata->authKeyLen = volumeId ? sizeof(volumeId) : 0; // can't be zero
 			authStr = (char *)&volumeId;
-			authVolumeId = true;
 		}
 		else
 			authdata->authKeyLen = min(strlen(authStr), authKeyMaxLen);
@@ -91,7 +88,7 @@ void RevEmuFinishAuthorization(authdata_t* authdata, const char* authStr, bool s
 
 		authdata->steamId = revHash(authdata->authKey) << 1;
 
-		if (authVolumeId)
+		if (authStr == (char *)&volumeId)
 			LCPrintf(false, "RevEmu auth key: '%u' steamid: %u\n", (uint32_t)authStr, authdata->steamId);
 		else
 			LCPrintf(false, "RevEmu auth key: '%s' steamid: %u\n", authStr, authdata->steamId);
@@ -147,7 +144,7 @@ bool RevEmu2009to2013Authorize(ticket_t* ticket, authdata_t* authdata)
 		return false;
 	}
 
-	RevEmuFinishAuthorization(authdata, DecryptedAuthData, g_ReunionConfig->isSC2009RevEmuCompat() || g_ReunionConfig->getAuthVersion() >= av_reunion2018);
+	RevEmuFinishAuthorization(authdata, DecryptedAuthData, sizeof DecryptedAuthData - 1, g_ReunionConfig->isSC2009RevEmuCompat() || g_ReunionConfig->getAuthVersion() >= av_reunion2018);
 
 	return true;
 }
@@ -239,7 +236,7 @@ client_auth_kind CRevEmuAuthorizer::authorize(authdata_t* authdata)
 		return CA_UNKNOWN;
 	}
 
-	RevEmuFinishAuthorization(authdata, ticket->TicketBuf, g_ReunionConfig->getAuthVersion() >= av_reunion2018);
+	RevEmuFinishAuthorization(authdata, ticket->TicketBuf, sizeof ticket->TicketBuf - 1, g_ReunionConfig->getAuthVersion() >= av_reunion2018);
 
 	return CA_REVEMU;
 }
