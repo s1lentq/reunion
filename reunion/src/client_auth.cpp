@@ -256,11 +256,9 @@ void SV_ConnectClient_hook(IRehldsHook_SV_ConnectClient* chain) {
 	}
 #endif
 
+	g_ISteamGameServer = g_RehldsApi->GetServerData()->GetSteamGameServer();
+
 	client_auth_context_t ctx;
-
-	if (!g_ISteamGameServer)
-		g_ISteamGameServer = g_RehldsApi->GetServerData()->GetSteamGameServer();
-
 	g_CurrentAuthContext = &ctx;
 	chain->callNext();
 	g_CurrentAuthContext = nullptr;
