@@ -62,6 +62,7 @@ private:
 public:
 	bool load(FILE *fl);
 	static CReunionConfig* createDefault();
+	static FILE* open(const char* fname, const char* fmode);
 	static FILE* open(const char* fname);
 
 	bool parseCfgParam();

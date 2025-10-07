@@ -17,6 +17,7 @@
 	#define rotr _rotr
 	#define rotl64 _rotl64
 	#define rotr64 _rotr64
+	#define ftruncate _chsize
 
 #else //WIN32
 	#include <arpa/inet.h>
@@ -26,6 +27,7 @@
 	#include <netinet/in.h>
 	#include <sys/sysinfo.h>
 	#include <sys/time.h>
+
 	#define NOINLINE __attribute__((noinline))
 
 	inline uint32_t rotl(uint32_t x, int r)
