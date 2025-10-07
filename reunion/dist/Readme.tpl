@@ -24,16 +24,18 @@ INSTALLATION:
 		or this for linux
 			linux addons/reunion/reunion_mm_i386.so
 		at the beginning of the file
-	4. Copy reunion.cfg to server root or gamedir.
-	5. Start the server. When server loads, type "meta list" in console. You'll see something like this:
+	4. Enter a 16-64 length random alphanumerical string to "SteamIdHashSalt=" option in reunion.cfg.
+		Or you can use generate_random_salt.sh script to do this automatically.
+	5. Copy reunion.cfg to server root or gamedir.
+	6. Start the server. When server loads, type "meta list" in console. You'll see something like this:
 
 		Currently loaded plugins:
 		      description      stat pend  file              vers      src   load  unlod
 		 [ 1] Reunion          RUN   -    reunion_mm_i386.  v${APP_VERSION_STRD} ini   Start Never
 		 [ 2] AMX Mod X        RUN   -    amxmodx_mm_i386.  v1.8.1.3  ini   Start ANY
 		2 plugins, 2 running
-	6. If status is not "RUN", start server with "+log on +mp_logecho 1" parameters and look through console output. In 99% cases you'll find reason there.
-	7. Installation of AmxModX plugins from amxx directory is not necessary.
+	7. If status is not "RUN", start server with "+log on +mp_logecho 1" parameters and look through console output. In 99% cases you'll find reason there.
+	8. Installation of AmxModX plugins from amxx directory is not necessary.
 
 HOW TO CHANGE STEAMIDS OF CLIENTS
 	Use cid* options in AUTHID MANAGEMENT section of reunion.cfg
