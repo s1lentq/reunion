@@ -343,17 +343,21 @@ bool CReunionConfig::parseCfgParam()
 FILE* CReunionConfig::open(const char* fname)
 {
 	char path[MAX_PATH];
-	strncpy(path, gpMetaUtilFuncs->pfnGetPluginPath(PLID), sizeof path - 1);
-	path[sizeof path - 1] = '\0';
+	const char* ppath = gpMetaUtilFuncs->pfnGetPluginPath(PLID);
 
-	char* s = strrchr(path, '/');
-	if (s) {
-		size_t maxlen = sizeof path - 1 - (s + 1 - path);
-		strncpy(s + 1, fname, maxlen);
+	if (ppath) {
+		strncpy(path, ppath, sizeof path - 1);
 		path[sizeof path - 1] = '\0';
-
-		FILE *fl = fopen(path, "r");
-		if (fl) return fl;
+	
+		char* s = strrchr(path, '/');
+		if (s) {
+			size_t maxlen = sizeof path - 1 - (s + 1 - path);
+			strncpy(s + 1, fname, maxlen);
+			path[sizeof path - 1] = '\0';
+	
+			FILE *fl = fopen(path, "r");
+			if (fl) return fl;
+		}
 	}
 
 	char gamedir[MAX_PATH];
