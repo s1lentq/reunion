@@ -702,8 +702,9 @@ void CServerInfo::parseAppVersion(char* buf, size_t maxlen)
 			trimbuf(line);
 			trimbuf(value);
 
-			if (!strcmp(line, "PatchVersion=")) {
+			if (!strcmp(line, "PatchVersion")) {
 				snprintf(buf, maxlen, "%s/Stdio", value);
+				buf[maxlen] = 0;
 				break;
 			}
 		}
