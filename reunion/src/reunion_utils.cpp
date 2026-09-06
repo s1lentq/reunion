@@ -95,6 +95,7 @@ bool IsNumericAuthKind(client_auth_kind authkind) {
 	case CA_REVEMU_2013:
 	case CA_AVSMP:
 	case CA_SXEI:
+	case CA_SSE3:
 		return true;
 
 	default:

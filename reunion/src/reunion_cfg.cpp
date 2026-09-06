@@ -162,6 +162,7 @@ CReunionConfig* CReunionConfig::createDefault()
 	cfg->m_AuthIdGenOptions[CA_STEAM_EMU].id_kind = CI_STEAM_ID_LAN;
 	cfg->m_AuthIdGenOptions[CA_OLD_REVEMU].id_kind = CI_STEAM_ID_LAN;
 	cfg->m_AuthIdGenOptions[CA_AVSMP].id_kind = CI_STEAM_ID_LAN;
+	cfg->m_AuthIdGenOptions[CA_SSE3].id_kind = CI_STEAM_ID_LAN;
 
 	cfg->m_AuthIdGenOptions[CA_REVEMU].id_kind = CI_REAL_STEAM;
 	cfg->m_AuthIdGenOptions[CA_STEAMCLIENT_2009].id_kind = CI_REAL_STEAM;
@@ -300,6 +301,7 @@ bool CReunionConfig::parseCfgParam()
 		REU_CFG_PARSE_IDKIND("cid_OldRevEmu", CA_OLD_REVEMU)
 		REU_CFG_PARSE_IDKIND("cid_Steam", CA_STEAM)
 		REU_CFG_PARSE_IDKIND("cid_AVSMP", CA_AVSMP)
+		REU_CFG_PARSE_IDKIND("cid_SSE3", CA_SSE3)
 		REU_CFG_PARSE_IDKIND("cid_SteamPending", CA_STEAM_PENDING);
 
 		REU_CFG_PARSE_INT("IPGen_Prefix1", m_IPGenOptions.prefix1, int, 0, 255)
@@ -312,6 +314,7 @@ bool CReunionConfig::parseCfgParam()
 		REU_CFG_PARSE_INT("OldRevEmu_Prefix1", m_AuthIdGenOptions[CA_OLD_REVEMU].prefix1, int, 0, 255)
 		REU_CFG_PARSE_INT("Setti_Prefix1", m_AuthIdGenOptions[CA_SETTI].prefix1, int, 0, 255)
 		REU_CFG_PARSE_INT("AVSMP_Prefix1", m_AuthIdGenOptions[CA_AVSMP].prefix1, int, 0, 255)
+		REU_CFG_PARSE_INT("SSE3_Prefix1", m_AuthIdGenOptions[CA_SSE3].prefix1, int, 0, 255)
 		REU_CFG_PARSE_INT("SXEI_Prefix1", m_AuthIdGenOptions[CA_SXEI].prefix1, int, 0, 255)
 	}
 

@@ -30,6 +30,7 @@ const char *g_AuthorizerName[] =
 	"RevEmu2013",			// RevEmu (authorization by serial number of first HDD in the system)
 	"AVSMP",				// Steam emulator, transmits steamid from Steam without any security/encryption, so it may be easily spoofed
 	"sXe",					// Authorization by sXe Injected anticheat ID
+	"SSE3",					// SmartSteamEmu
 };
 
 IClientAuthorizer* g_ClientAuthorizers[MAX_CLIENT_AUTHORIZERS];
@@ -337,6 +338,117 @@ client_auth_kind CAVSMPAuthorizer::authorize(authdata_t* authdata)
 	return CA_AVSMP;
 }
 
+client_auth_kind CSSE3Authorizer::authorize(authdata_t* authdata)
+{
+	enum
+	{
+		HEADER = 'UMEH',
+		MAGIC = ' ESS',
+		MIN_METHOD = 315,
+		DATA_SIZE = 32,
+		MAX_DATA_SIZE = 0x800,
+		PENDING_ID = 1234,
+		TIME_TOLERANCE = 57600, // +-16 hours of clock skew between client and server is tolerated
+		SSE3_KEY_LEN = 16,
+		SSE3_BLOCK_SIZE = 16,
+	};
+
+	struct SSE3Ticket_t
+	{
+		uint32_t Header;		// +0,  'UMEH'
+		int32_t Method;			// +4,  ticket format revision, dproto/reunion just want it to be >= MIN_METHOD
+		uint32_t IpAddr;		// +8,  client's external IP
+		uint32_t Unk0C;			// +12
+		uint32_t Unk10;			// +16
+		uint32_t Unk14;			// +20
+		uint64_t KeyMaterial;	// +24, client-chosen seed; first 16 bytes of SHA256(KeyMaterial) is the AES-128 key below
+		uint32_t Unk20;			// +32
+		uint32_t Unk24;			// +36
+		uint32_t Unk28;			// +40
+		uint32_t Unk2C;			// +44
+		CSteamID SteamID;		// +48, plaintext copy of the SteamID
+		uint32_t DataLen;		// +56, length of the encrypted part below, must be DATA_SIZE
+
+		// Encrypted with a modified-Rijndael AES-128/CBC (zero IV) using SHA256(KeyMaterial)[0:16] as the key
+		uint32_t Random;		// +60
+		uint32_t Magic;			// +64, must decrypt to MAGIC
+		CSteamID EncSteamID;	// +68, must match the plaintext SteamID above
+		uint32_t IpAddr2;		// +76, must match either the connecting IP or a private/loopback range
+		uint32_t Unused;		// +80
+		int64_t GenTime;		// +84, ticket generation time (time_t), checked against TIME_TOLERANCE
+	};
+
+	static_assert(offsetof(SSE3Ticket_t, KeyMaterial) == 24 && offsetof(SSE3Ticket_t, DataLen) == 56 && offsetof(SSE3Ticket_t, Random) == 60, "wrong SSE3 ticket layout");
+
+	if (authdata->ticketLen < offsetof(SSE3Ticket_t, Random)) {
+		return CA_UNKNOWN;
+	}
+
+	SSE3Ticket_t* ticket = (SSE3Ticket_t *)authdata->authTicket;
+	if (ticket->Header != HEADER || ticket->Method < MIN_METHOD) {
+		return CA_UNKNOWN;
+	}
+
+	if (ticket->DataLen != DATA_SIZE || ticket->DataLen > MAX_DATA_SIZE
+		|| authdata->ticketLen < ticket->DataLen + offsetof(SSE3Ticket_t, Random)) {
+		return CA_UNKNOWN;
+	}
+
+	sha2 hSha;
+	hSha.Init(sha2::enuSHA256);
+	hSha.Update((sha_byte *)&ticket->KeyMaterial, sizeof(ticket->KeyMaterial));
+	hSha.End();
+
+	int shaLen;
+	const char *cDigest = hSha.RawHash(shaLen);
+
+	CRijndaelChanged hCrypt;
+	hCrypt.MakeKey(cDigest, CRijndaelChanged::sm_chain0, SSE3_KEY_LEN, SSE3_BLOCK_SIZE);
+
+	uint32_t decrypted[DATA_SIZE / sizeof(uint32_t)];
+	if (!hCrypt.Decrypt((char *)&ticket->Random, (char *)decrypted, DATA_SIZE, CRijndaelChanged::CBC)) {
+		return CA_UNKNOWN;
+	}
+
+	if (decrypted[1] != (uint32_t)MAGIC) {
+		return CA_UNKNOWN;
+	}
+
+	CSteamID* decSteamID = (CSteamID *)&decrypted[2];
+	uint32_t decIpAddr = decrypted[4];
+
+	if (!IsReservedAdr(authdata->ipaddr) && decIpAddr != authdata->ipaddr) {
+		return CA_UNKNOWN;
+	}
+
+	int64_t genTime;
+	memcpy(&genTime, &decrypted[6], sizeof(genTime));
+	if ((uint64_t)(time(nullptr) - genTime + TIME_TOLERANCE) > 2 * TIME_TOLERANCE) {
+		return CA_UNKNOWN;
+	}
+
+	if (memcmp(decSteamID, &ticket->SteamID, sizeof(CSteamID)) != 0) {
+		return CA_UNKNOWN;
+	}
+
+	uint32_t accId = ticket->SteamID.GetAccountID();
+	authdata->idtype = AUTH_IDTYPE_LOCAL;
+
+	if (!accId || accId == PENDING_ID) {
+		authdata->steamId = STEAM_ID_PENDING;
+		authdata->authKeyKind = AK_OTHER;
+		authdata->authKeyLen = 0;
+	}
+	else {
+		authdata->steamId = accId;
+		authdata->authKeyKind = AK_FILEID;
+		authdata->authKeyLen = sizeof(uint32_t);
+		*(uint32_t *)authdata->authKey = accId;
+	}
+
+	return CA_SSE3;
+}
+
 client_auth_kind COldRevEmuAuthorizer::authorize(authdata_t* authdata)
 {
 	enum
@@ -519,6 +631,7 @@ void Reunion_Init_Authorizers()
 	Reunion_Add_Authorizer(new CSXEIAuthorizer());
 	Reunion_Add_Authorizer(new CSettiAuthorizer());
 	Reunion_Add_Authorizer(new CAVSMPAuthorizer());
+	Reunion_Add_Authorizer(new CSSE3Authorizer());
 	Reunion_Add_Authorizer(new CRevEmu2013Authorizer());
 	Reunion_Add_Authorizer(new CSteamClient2009Authorizer());
 	Reunion_Add_Authorizer(new CRevEmuAuthorizer());

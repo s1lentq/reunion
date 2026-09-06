@@ -12,6 +12,7 @@ cvar_t cv_dp_rejmsg_revemu2013 = { "dp_rejmsg_revemu2013", "Sorry, RevEmu2013 cl
 cvar_t cv_dp_rejmsg_steamemu = { "dp_rejmsg_steamemu", "Sorry, SteamEmu clients are not allowed on this server", FCVAR_EXTDLL, 0, NULL };
 cvar_t cv_dp_rejmsg_oldrevemu = { "dp_rejmsg_oldrevemu", "Sorry, Old RevEmu clients are not allowed on this server", FCVAR_EXTDLL, 0, NULL };
 cvar_t cv_dp_rejmsg_avsmp = { "dp_rejmsg_avsmp", "Sorry, AVSMP clients are not allowed on this server", FCVAR_EXTDLL, 0, NULL };
+cvar_t cv_dp_rejmsg_sse3 = { "dp_rejmsg_sse3", "Sorry, SmartSteamEmu clients are not allowed on this server", FCVAR_EXTDLL, 0, NULL };
 cvar_t cv_dp_rejmsg_revemu_sc2009 = { "dp_rejmsg_revemu_sc2009", "Sorry, revEmu/SC2009 clients are not allowed on this server", FCVAR_EXTDLL, 0, NULL };
 cvar_t cv_dp_rejmsg_sxei = { "dp_rejmsg_sxei", "Sorry, sXe Injected clients are not allowed on this server", FCVAR_EXTDLL, 0, NULL };
 
@@ -24,6 +25,7 @@ cvar_t *pcv_dp_rejmsg_revemu;
 cvar_t *pcv_dp_rejmsg_steamemu;
 cvar_t *pcv_dp_rejmsg_oldrevemu;
 cvar_t *pcv_dp_rejmsg_avsmp;
+cvar_t *pcv_dp_rejmsg_sse3;
 cvar_t *pcv_dp_rejmsg_revemu_sc2009;
 cvar_t *pcv_dp_rejmsg_revemu2013;
 cvar_t *pcv_dp_rejmsg_sxei;
@@ -47,6 +49,7 @@ void Reunion_Reject_Deprecated(client_auth_kind authkind) {
 	case CA_REVEMU_2013: kickMessage = pcv_dp_rejmsg_revemu2013->string; break;
 	case CA_AVSMP: kickMessage = pcv_dp_rejmsg_avsmp->string; break;
 	case CA_SXEI: kickMessage = pcv_dp_rejmsg_sxei->string; break;
+	case CA_SSE3: kickMessage = pcv_dp_rejmsg_sse3->string; break;
 	default:
 		kickMessage = "Unknown client type";
 		break;
@@ -536,6 +539,7 @@ bool Reunion_Auth_Init() {
 	g_engfuncs.pfnCvar_RegisterVariable(&cv_dp_rejmsg_steamemu);
 	g_engfuncs.pfnCvar_RegisterVariable(&cv_dp_rejmsg_oldrevemu);
 	g_engfuncs.pfnCvar_RegisterVariable(&cv_dp_rejmsg_avsmp);
+	g_engfuncs.pfnCvar_RegisterVariable(&cv_dp_rejmsg_sse3);
 	g_engfuncs.pfnCvar_RegisterVariable(&cv_dp_rejmsg_revemu_sc2009);
 	g_engfuncs.pfnCvar_RegisterVariable(&cv_dp_rejmsg_sxei);
 
@@ -549,6 +553,7 @@ bool Reunion_Auth_Init() {
 	pcv_dp_rejmsg_steamemu = g_engfuncs.pfnCVarGetPointer(cv_dp_rejmsg_steamemu.name);
 	pcv_dp_rejmsg_oldrevemu = g_engfuncs.pfnCVarGetPointer(cv_dp_rejmsg_oldrevemu.name);
 	pcv_dp_rejmsg_avsmp = g_engfuncs.pfnCVarGetPointer(cv_dp_rejmsg_avsmp.name);
+	pcv_dp_rejmsg_sse3 = g_engfuncs.pfnCVarGetPointer(cv_dp_rejmsg_sse3.name);
 	pcv_dp_rejmsg_revemu_sc2009 = g_engfuncs.pfnCVarGetPointer(cv_dp_rejmsg_revemu_sc2009.name);
 	pcv_dp_rejmsg_sxei = g_engfuncs.pfnCVarGetPointer(cv_dp_rejmsg_sxei.name);
 

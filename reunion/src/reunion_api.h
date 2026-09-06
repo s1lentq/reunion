@@ -17,6 +17,7 @@ enum dp_authkind_e
 	DP_AUTH_AVSMP = 8,
 	DP_AUTH_SXEI = 9,
 	DP_AUTH_REVEMU2013 = 10,
+	DP_AUTH_SSE3 = 11,
 };
 
 enum reu_authkey_kind

@@ -40,6 +40,7 @@ enum client_auth_kind {
 	CA_REVEMU_2013,			// RevEmu (authorization by serial number of first HDD in the system)
 	CA_AVSMP,				// Steam emulator, transmits steamid from Steam without any security/encryption, so it may be easily spoofed
 	CA_SXEI,				// Authorization by sXe Injected anticheat ID.
+	CA_SSE3,				// SmartSteamEmu (>= 1.2.4), transmits steamid inside an AES-encrypted, self-consistency-checked ticket
 
 	CA_MAX,
 };

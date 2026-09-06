@@ -18,6 +18,7 @@
 #define DP_AUTH_AVSMP		8
 #define DP_AUTH_SXEI		9
 #define DP_AUTH_REVEMU2013	10
+#define DP_AUTH_SSE3		11
 
 
 //
@@ -100,6 +101,7 @@ public client_connect(id)
 		case DP_AUTH_AVSMP: copy(auth_prov_str, 32, "AVSMP")
 		case DP_AUTH_SXEI: copy(auth_prov_str, 32, "SXEI")
 		case DP_AUTH_REVEMU2013: copy(auth_prov_str, 32, "RevEmu2013")
+		case DP_AUTH_SSE3: copy(auth_prov_str, 32, "SSE3")
 		default: copy(auth_prov_str, 32, "Erroneous") //-1 if slot id is invalid
 	}
 

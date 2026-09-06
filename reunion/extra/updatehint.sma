@@ -40,6 +40,7 @@
 #define DP_AUTH_AVSMP		8	// AVSMP
 #define DP_AUTH_SXEI		9	// sXe Injected
 #define DP_AUTH_REVEMU2013	10	// RevEmu 2013
+#define DP_AUTH_SSE3		11	// SmartSteamEmu
 
 new const PLUGIN[]  = "UpdateHint";
 new const VERSION[] = "1.3";
@@ -110,7 +111,8 @@ stock NeedShowUpdateMsg(proto, authprov)
 		authprov == DP_AUTH_SC2009 ||
 		authprov == DP_AUTH_AVSMP ||
 		authprov == DP_AUTH_SXEI ||
-		authprov == DP_AUTH_REVEMU2013)
+		authprov == DP_AUTH_REVEMU2013 ||
+		authprov == DP_AUTH_SSE3)
 		return false;
 
 	return true;
@@ -149,6 +151,8 @@ check_client_type(id)
 			console_print(0, "Protocol: %d, authprovider: %s", proto, "SXEI");
 		case DP_AUTH_REVEMU2013:
 			console_print(0, "Protocol: %d, authprovider: %s", proto, "REVEMU2013");
+		case DP_AUTH_SSE3:
+			console_print(0, "Protocol: %d, authprovider: %s", proto, "SSE3");
 	}
 
 	if (NeedShowUpdateMsg(proto, authprov))

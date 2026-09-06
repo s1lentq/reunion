@@ -66,6 +66,10 @@ class CSteamEmuAuthorizer : public IClientAuthorizer {
 	client_auth_kind authorize(authdata_t* authdata) override;
 };
 
+class CSSE3Authorizer : public IClientAuthorizer {
+	client_auth_kind authorize(authdata_t* authdata) override;
+};
+
 class CSXEIAuthorizer : public IClientAuthorizer {
 	client_auth_kind authorize(authdata_t* authdata) override;
 };

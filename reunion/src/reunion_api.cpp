@@ -101,6 +101,10 @@ dp_authkind_e Reunion_GetPlayerAuthkind(CReunionPlayer* plr)
 		dpAuthKind = DP_AUTH_SXEI;
 		break;
 
+	case CA_SSE3:
+		dpAuthKind = DP_AUTH_SSE3;
+		break;
+
 	default:
 		dpAuthKind = DP_AUTH_NONE;
 		break;
@@ -154,6 +158,7 @@ const char *CReunionApiImpl::GetClientAuthdataString(int index, char *data, int 
 	case CA_STEAM_EMU:
 	case CA_OLD_REVEMU:
 	case CA_AVSMP:
+	case CA_SSE3:
 		snprintf(data, maxlen, "%u", *(uint32 *)raw);
 		break;
 
